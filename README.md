@@ -1,4 +1,4 @@
-# Deep Learning (CSE 490G1) Final Project: American Sign Langugage Classification Using Neural Networks
+# Deep Learning (CSE 490G1) Final Project: American Sign Language Classification Using Neural Networks
 **Group Members: Vivek Patel, Hayoung Jung**
 
 ## Abstract
