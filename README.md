@@ -1,5 +1,8 @@
 # Deep Learning (CSE 490G1) Final Project: American Sign Language Classification Using Neural Networks
 **Group Members: Vivek Patel, Hayoung Jung**
+Google Colab Link: https://colab.research.google.com/drive/15hcc8srj3fE71NhEgYeRI1yipwCI6uia?usp=sharing
+
+Please note that the ipynb file of the google colab is available on the github repo as well. The overview video and the live demo video can be found at the bottom of the README.md page.
 
 ## Abstract
 To identify and classify American Sign Language (i.e. ASL) images into correct English alphabet characters, we employed convolutional neural networks in order to effectively execute the task quickly and accurately. The model was trained and tested on 87,000 ASL image dataset from Kaggle. We investigated and experimented with various model network architectures, image data augmentations, hyperparamters, and transfer learning with AlexNet in order to obtain the performance. Our best-performing model achieved an accuracy of 100% on our 29-image test suite of ASL characters while obtaining 98.7126% validation accuracy on the validation set. Our results suggest that 1) deep learning models can accurately classify ASL images, making them incredible tools for those who are beginning to learn American Sign Language, and 2) training simple models from scratch on a dataset can have a much better performance compared to trying to finetune a powerful, complicated network to a different task.  
