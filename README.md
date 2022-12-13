@@ -21,7 +21,7 @@ After organizing our dataset within Google Colab, we performed data augmentation
 
 With the dataloader complete, we experimented with multiple network architectures and hyperparameters to extract features from the ASL images and classify them to the accurate English alphabet characters. We detail the network architectures, hyperparameter values, evaluations, and performance results that worked the best for our given tasks, including the transfer learning for AlexNet, in the next section, specifically the "Experiments/evaluation" section. For each of the network architectures, we show the training loss, validation loss, and validation accuracies graph over each epoch on the best hyperparameter value. At the end, we also show the test accuracy on our 29-test suite image set as well as each individual model predictions on the 29 test images. 
 
-## Experiments/evaluation
+## Experiments/Evaluation
 Since we are performing a multiclass classification, we calculated cross entropy loss with mean reduction across all the model architectures including the transfer learning for AlexNet in order to the train the models. Note that we used stochastic gradient descent (SGD) to train the model using the cross entropy loss for all the experiments. We evaluated the experiment and the model results by using the validation accuracy and test accuracy primarily -- we calculated the accuracy based on how often the model was able to correctly predict the image label accordingly based on the ASL image. We also used cross entropy loss on the validation set (averaged across batches) to evaluate the model and decide which hyperparameters to use, but accuracy was our main evaluation metric.
 
 ### Experiment 1: ASLv1 Model
@@ -60,39 +60,150 @@ class ASLNet_Version1(nn.Module):
         return x
 ```
 
-Best Performing Hyperparameter values for the ASLv1:
+Best Performing Hyperparameter values for ASLv1:
 ```
 BATCH_SIZE = 64
 TEST_BATCH_SIZE = 10
 EPOCHS = 25
 LEARNING_RATE = 0.01
 MOMENTUM = 0.9
-USE_CUDA = True
-SEED = 0
-PRINT_INTERVAL = 100
 WEIGHT_DECAY = 0.0005
 ```
 ### Experiment 2: ASLv2 Model
+Network Architecture: 
+```
+class ASLNet_Version2(nn.Module):
+    def __init__(self):
+        super(ASLNet_Version2, self).__init__()
+        self.conv1 = nn.Conv2d(3, 16, 3)
+        self.conv2 = nn.Conv2d(16, 64, 3)
+        self.conv3 = nn.Conv2d(64, 128, 3)
+        self.conv4 = nn.Conv2d(128, 256, 3)
+        self.fc1 = nn.Linear(135424, 512)
+        self.fc2 = nn.Linear(512, 29)
+
+        self.maxpool1 = nn.MaxPool2d((2, 2))
+        self.maxpool2 = nn.MaxPool2d((4, 4))
+        self.accuracy = None
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = F.relu(x)
+        x = self.conv2(x)
+        x = F.relu(x)
+        x = self.maxpool1(x)
+
+        x = self.conv3(x)
+        x = F.relu(x)
+        x = self.conv4(x)
+        x = F.relu(x)
+        x = self.maxpool2(x)
+
+        x = torch.flatten(x, 1)
+        x = self.fc1(x)
+        x = F.relu(x)
+        x = self.fc2(x)
+        return x
+```
+
+Best Performing Hyperparameter values for ASLv2:
+```
+BATCH_SIZE = 64
+TEST_BATCH_SIZE = 10
+EPOCHS = 10
+LEARNING_RATE = 0.01
+MOMENTUM = 0.9
+WEIGHT_DECAY = 0.0005
+```
 
 ### Experiment 3: AlexNet Model (Transfer Learning/Finetuning to ASL Classification Task)
+Network architecture:
+```
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1           [-1, 64, 56, 56]          23,296
+              ReLU-2           [-1, 64, 56, 56]               0
+         MaxPool2d-3           [-1, 64, 27, 27]               0
+            Conv2d-4          [-1, 192, 27, 27]         307,392
+              ReLU-5          [-1, 192, 27, 27]               0
+         MaxPool2d-6          [-1, 192, 13, 13]               0
+            Conv2d-7          [-1, 384, 13, 13]         663,936
+              ReLU-8          [-1, 384, 13, 13]               0
+            Conv2d-9          [-1, 256, 13, 13]         884,992
+             ReLU-10          [-1, 256, 13, 13]               0
+           Conv2d-11          [-1, 256, 13, 13]         590,080
+             ReLU-12          [-1, 256, 13, 13]               0
+        MaxPool2d-13            [-1, 256, 6, 6]               0
+AdaptiveAvgPool2d-14            [-1, 256, 6, 6]               0
+          Dropout-15                 [-1, 9216]               0
+           Linear-16                 [-1, 4096]      37,752,832
+             ReLU-17                 [-1, 4096]               0
+          Dropout-18                 [-1, 4096]               0
+           Linear-19                 [-1, 4096]      16,781,312
+           Linear-20                  [-1, 512]       2,097,664
+             ReLU-21                  [-1, 512]               0
+           Linear-22                   [-1, 29]          14,877
+================================================================
+```
 
-## Results
+We froze the weights for all layers before layer 19, and trained according to these hyperparameters:
+```
+BATCH_SIZE = 32
+TEST_BATCH_SIZE = 10
+EPOCHS = 10
+LEARNING_RATE = 0.005
+MOMENTUM = 0.6
+WEIGHT_DECAY = 0.0005
+```
+## Results (view in light mode, some images have transparency)
 
 ### Result 1: ASLv1 Model
-**insert graphs from the doc and the final train/validation loss, accuracies (test, validation) + any other metrics results for each below
+ASLv1 Performance:
+* Epoch: 8
+* Train Loss: 0.0533818
+* Validation Loss: 0.028572216
+* Validation Accuracy: 99.21%
+* Test Accuracy: 96.428% (i.e. 27/28 examples correct)
+
+![](./aslv1graphs.png)
+
 
 ### Result 2: ASLv2 Model
+ASLv2 Performance:
+* Epoch: 10
+* Training Loss: 0.024703674171026816
+* Validation Loss: 0.04181242462900606
+* Validation Accuracy: 98.7126
+* Test: 100.0% (i.e. 28/28 examples correct)
+
+![](./aslv2graphs.png)
 
 ### Result 3: AlexNet Model (Transfer Learning/Finetuning to ASL Classification Task)
+Modified AlexNet Performance:
 
-## Examples
+![](./alexnetgraphs.png)
+* Epoch: 9
+* Training Loss: 1.707148460999344
+* Validation Loss: 0.04122457779687026
+* Validation Accuracy: 54.24521072796935
+* Test Accuracy: 71.4285174% (i.e. 20/28 examples correct)
+
+
+## Examples (view in light mode, some images have transparency)
 
 ### Examples 1: ASLv1 Model
-**image in the doc about the model predictions
+![](./aslv1demo.png)
 
 ### Examples 2: ASLv2 Model
+![](./aslv2demo.png)
 
 ### Examples 3: AlexNet Model (Transfer Learning/Finetuning to ASL Classification Task)
-
+![](./alexnetdemo.png)
 ## Video
-insert the videos for live demo + our video
+[Here](https://youtu.be/geiv9Ux8MT0) is a brief video presentation overviewing our project:
+
+[![Here's a video of our presentation!](https://img.youtube.com/vi/geiv9Ux8MT0/0.jpg)](https://youtu.be/geiv9Ux8MT0)
+
+And [here](https://youtu.be/pgPHhu32z9Q) is a live demo of the networks making predictions:
+[![Here's a video of our live demo!](https://img.youtube.com/vi/pgPHhu32z9Q/0.jpg)](https://youtu.be/pgPHhu32z9Q)
