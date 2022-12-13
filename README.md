@@ -156,7 +156,7 @@ LEARNING_RATE = 0.005
 MOMENTUM = 0.6
 WEIGHT_DECAY = 0.0005
 ```
-## Results (view in light mode, some images have transparency)
+## Results
 
 ### Result 1: ASLv1 Model
 ASLv1 Performance:
@@ -182,7 +182,7 @@ ASLv2 Performance:
 ### Result 3: AlexNet Model (Transfer Learning/Finetuning to ASL Classification Task)
 Modified AlexNet Performance:
 
-![](./alexnetgraphs.png)
+![](./alexnetgraphs_withbg.png)
 * Epoch: 9
 * Training Loss: 1.707148460999344
 * Validation Loss: 0.04122457779687026
@@ -190,20 +190,22 @@ Modified AlexNet Performance:
 * Test Accuracy: 71.4285174% (i.e. 20/28 examples correct)
 
 
-## Examples (view in light mode, some images have transparency)
+## Examples
 
 ### Examples 1: ASLv1 Model
-![](./aslv1demo.png)
+![](./aslv1demo_withbg.png)
 
 ### Examples 2: ASLv2 Model
-![](./aslv2demo.png)
+![](./aslv2demo_withbg.png)
 
 ### Examples 3: AlexNet Model (Transfer Learning/Finetuning to ASL Classification Task)
-![](./alexnetdemo.png)
+![](./alexnetdemo_withbg.png)
 ## Video
 [Here](https://youtu.be/geiv9Ux8MT0) is a brief video presentation overviewing our project:
 
 [![Here's a video of our presentation!](https://img.youtube.com/vi/geiv9Ux8MT0/0.jpg)](https://youtu.be/geiv9Ux8MT0)
 
+
 And [here](https://youtu.be/pgPHhu32z9Q) is a live demo of the networks making predictions:
+
 [![Here's a video of our live demo!](https://img.youtube.com/vi/pgPHhu32z9Q/0.jpg)](https://youtu.be/pgPHhu32z9Q)
