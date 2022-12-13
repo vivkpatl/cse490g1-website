@@ -174,7 +174,7 @@ ASLv2 Performance:
 * Epoch: 10
 * Training Loss: 0.024703674171026816
 * Validation Loss: 0.04181242462900606
-* Validation Accuracy: 98.7126
+* Validation Accuracy: 98.7126%
 * Test: 100.0% (i.e. 28/28 examples correct)
 
 ![](./aslv2graphs.png)
@@ -186,7 +186,7 @@ Modified AlexNet Performance:
 * Epoch: 9
 * Training Loss: 1.707148460999344
 * Validation Loss: 0.04122457779687026
-* Validation Accuracy: 54.24521072796935
+* Validation Accuracy: 54.24521072796935%
 * Test Accuracy: 71.4285174% (i.e. 20/28 examples correct)
 
 
