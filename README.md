@@ -1,5 +1,6 @@
 # Deep Learning (CSE 490G1) Final Project: American Sign Language Classification Using Neural Networks
 **Group Members: Vivek Patel, Hayoung Jung**
+
 Google Colab Link: https://colab.research.google.com/drive/15hcc8srj3fE71NhEgYeRI1yipwCI6uia?usp=sharing
 
 Please note that the ipynb file of the google colab is available on the github repo as well. The overview video and the live demo video can be found at the bottom of the README.md page.
